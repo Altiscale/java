@@ -17,14 +17,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# remove the deprecated Ubuntu jdk packages
-default['java']['remove_deprecated_packages'] = false
-
 # default jdk attributes
 default['java']['jdk_version'] = '6'
 default['java']['arch'] = kernel['machine'] =~ /x86_64/ ? "x86_64" : "i586"
 default['java']['openjdk_packages'] = []
 default['java']['accept_license_agreement'] = false
+default['java']['set_default'] = true
+
+# the following retry parameters apply when downloading oracle java
+default['java']['ark_retries'] = 0
+default['java']['ark_retry_delay'] = 2
 
 case node['platform_family']
 when "windows"
@@ -86,9 +88,29 @@ default['java']['jdk']['7']['bin_cmds'] = [ "appletviewer", "apt", "ControlPanel
 # Official checksums for the latest release can be found at http://www.oracle.com/technetwork/java/javase/downloads/java-se-binaries-checksum-1956892.html
 
 # x86_64
-default['java']['jdk']['7']['x86_64']['url'] = 'http://download.oracle.com/otn-pub/java/jdk/7u51-b13/jdk-7u51-linux-x64.tar.gz'
-default['java']['jdk']['7']['x86_64']['checksum'] = '764f96c4b078b80adaa5983e75470ff2'
+default['java']['jdk']['7']['x86_64']['url'] = 'http://download.oracle.com/otn-pub/java/jdk/7u60-b19/jdk-7u60-linux-x64.tar.gz'
+default['java']['jdk']['7']['x86_64']['checksum'] = 'eba4b121b8a363f583679d7cb2e69d28'
 
 # i586
-default['java']['jdk']['7']['i586']['url'] = 'http://download.oracle.com/otn-pub/java/jdk/7u51-b13/jdk-7u51-linux-i586.tar.gz'
-default['java']['jdk']['7']['i586']['checksum'] = '909d353c1caf6b3b54cc20767a7778ef'
+default['java']['jdk']['7']['i586']['url'] = 'http://download.oracle.com/otn-pub/java/jdk/7u60-b19/jdk-7u60-linux-i586.tar.gz'
+default['java']['jdk']['7']['i586']['checksum'] = 'b33c914b03e46c3e7c33e4bdddbec4bd'
+
+# jdk8 attributes
+
+default['java']['jdk']['8']['bin_cmds'] = [ "appletviewer", "apt", "ControlPanel", "extcheck", "idlj", "jar", "jarsigner", "java", "javac",
+                                            "javadoc", "javafxpackager", "javah", "javap", "javaws", "jcmd", "jconsole", "jcontrol", "jdb",
+                                            "jdeps", "jhat", "jinfo", "jjs", "jmap", "jmc", "jps", "jrunscript", "jsadebugd", "jstack",
+                                            "jstat", "jstatd", "jvisualvm", "keytool", "native2ascii", "orbd", "pack200", "policytool",
+                                            "rmic", "rmid", "rmiregistry", "schemagen", "serialver", "servertool", "tnameserv",
+                                            "unpack200", "wsgen", "wsimport", "xjc" ]
+
+# Oracle doesn't seem to publish SHA256 checksums for Java releases, so we use MD5 instead.
+# Official checksums for the latest release can be found at http://www.oracle.com/technetwork/java/javase/downloads/javase8-binaries-checksum-2133161.html
+
+# x86_64
+default['java']['jdk']['8']['x86_64']['url'] = 'http://download.oracle.com/otn-pub/java/jdk/8u5-b13/jdk-8u5-linux-x64.tar.gz'
+default['java']['jdk']['8']['x86_64']['checksum'] = 'adc3827532741873de9216a5aed883ed'
+
+# i586
+default['java']['jdk']['8']['i586']['url'] = 'http://download.oracle.com/otn-pub/java/jdk/8u5-b13/jdk-8u5-linux-i586.tar.gz'
+default['java']['jdk']['8']['i586']['checksum'] = 'fb0e8b5c0be11521bccec5d667559e76'
